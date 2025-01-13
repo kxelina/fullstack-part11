@@ -18,11 +18,11 @@ jobs:
       - name: build
         run: npm run build
       - name: test
-        run: npm run test
+        run: npm run test/jest
       - name: install playwright
         run: npx playwright install --with-deps
       - name: e2e tests
-        run: npx playwright test
+        run: npx playwright test/e2e
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
