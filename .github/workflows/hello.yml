@@ -5,5 +5,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Run Hello World
+    - name: Say hello
       run: echo "Hello World!"
+    - name: Now it is
+      run: echo "$(date)"
+    - name: Directory content
+      run: ls -l
