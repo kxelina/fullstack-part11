@@ -35,16 +35,16 @@ jobs:
         if: success()
         with:
           severity: info
+          details: 'commit ${{ github.sha }} was deployed'
           text: a new version of Pokedex was deployed
-          details: "commit ${GITHUB_SHA} was deployed"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test failure
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
             severity: error
+            details: 'commit ${{ github.sha }} broke the build'
             text: build failed
-            details: "commit ${GITHUB_SHA} broke the build"
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Render deployment
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
