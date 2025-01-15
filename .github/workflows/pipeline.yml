@@ -6,12 +6,13 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-    
+
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
     permissions:
         deployments: write
+        contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,12 +41,12 @@ jobs:
           github_deployment: true
           deployment_environment: 'production'
           github_token: ${{ secrets.GH_TOKEN }}
-    tag_release:
-      needs: [simple_deployment_pipeline]
-      runs-on: ubuntu-20.04
-      steps:
-        - name: Bump version and push tag
-          if: ${{ github.event_name == 'push' }}
-          uses: anothrNick/github-tag-action@1.71.0
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && success() }}
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
