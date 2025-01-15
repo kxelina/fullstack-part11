@@ -30,6 +30,22 @@ jobs:
         run: npx playwright install  --with-deps
       - name: e2e tests
         run: npm run test:e2e
+      - name: test success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          text: a new version of Pokedex was deployed
+          details: commit ${github.sha} was deployed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: test failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+            severity: error
+            text: build failed
+            details: commit ${github.sha} broke the build
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Render deployment
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         uses: JorgeLNJunior/render-deploy@v1.4.4
