@@ -1,0 +1,19 @@
+name: Periodic health check
+
+on:
+  push:
+    branches:
+      - main
+    schedule:
+      - cron: '0 0 * * *'
+  
+  jobs:
+    health_check:
+      runs-on: ubuntu-20.04
+      steps:
+        uses: actions/checkout@v4
+        - name: Run health check
+          uses: jtalk/health-check-action@v4
+          with:
+            url: https://full-stack-open-pokedex-ogm4.onrender.com
+            max-attempts: 3
