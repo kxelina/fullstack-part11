@@ -20,7 +20,7 @@ jobs:
       - name: test
         run: npm run test
       - name: install playwright
-        run: npx playwright install
+        run: npx playwright install  --with-deps
       - name: e2e tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4
