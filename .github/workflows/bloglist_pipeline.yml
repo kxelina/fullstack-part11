@@ -27,7 +27,7 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-username: testuser
-          mongodb-password: testpw
+          mongodb-password: testpassword
           mongodb-db: testdb
       - name: Install frontend dependencies 
         run: cd bloglist-frontend && npm install
@@ -41,7 +41,7 @@ jobs:
         run: cd bloglist-backend && npm run test
         env:
           CI: true
-          MONGODB_URI: mongodb://testuser:testpw@localhost:27017/testdb
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: test frontend
         run: cd bloglist-frontend && npm run test
       - name: Render deployment
