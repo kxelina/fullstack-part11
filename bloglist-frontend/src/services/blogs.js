@@ -1,5 +1,7 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://bloglist-backend-5m3q.onrender.com/api/blogs'
+  : '/api/blogs'
 
 let token = null
 
