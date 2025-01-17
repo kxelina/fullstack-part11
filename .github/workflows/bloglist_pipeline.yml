@@ -13,19 +13,16 @@ jobs:
     permissions:
         deployments: write
         contents: write
-    strategy:
-      matrix:
-        node-version: [20.x, 22.x]
-        mongodb-version: ['6.0', '7.0', '8.0']
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '20'
       - name: mongodb 
         uses: supercharge/mongodb-github-action@1.12.0
         with:
-          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-version: '4.4.6'
           mongodb-username: ${{ secrets.MONGODB_USERNAME }}
           mongodb-password: ${{ secrets.MONGODB_PASSWORD }}
           mongodb-db: ${{ secrets.MONGODB_DB }}
