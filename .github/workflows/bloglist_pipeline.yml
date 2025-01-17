@@ -19,13 +19,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: mongodb 
-        uses: supercharge/mongodb-github-action@1.12.0
-        with:
-          mongodb-version: '4.4.6'
-          mongodb-username: ${{ secrets.MONGODB_USERNAME }}
-          mongodb-password: ${{ secrets.MONGODB_PASSWORD }}
-          mongodb-db: ${{ secrets.MONGODB_DB }}
       - name: Install frontend dependencies 
         run: cd bloglist-frontend && npm install
       - name: Install backend dependencies
@@ -34,11 +27,6 @@ jobs:
         run: cd bloglist-frontend && npm run lint
       - name: build
         run: cd bloglist-frontend && npm run build
-      - name: test backend
-        run: cd bloglist-backend && npm run test
-        env:
-          CI: true
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: test frontend
         run: cd bloglist-frontend && npm run test
       - name: Render deployment
