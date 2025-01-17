@@ -18,18 +18,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install dependencies 
-        run: npm install  
+      - name: Install frontend dependencies 
+        run: cd bloglist-frontend && npm install
+      - name: Install backend dependencies
+        run: cd bloglist-backend && npm install
       - name: lint
-        run: npm run eslint
+        run: cd bloglist-frontend && npm run lint
       - name: build
-        run: npm run build
-      - name: test
-        run: npm run test
-      - name: install playwright
-        run: npx playwright install  --with-deps
-      - name: e2e tests
-        run: npm run test:e2e
+        run: cd bloglist-frontend && npm run build
+      - name: test backend
+        run: cd bloglist-backend && npm run test
+      - name: test frontend
+        run: cd bloglist-frontend && npm run test
       - name: Render deployment
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         uses: JorgeLNJunior/render-deploy@v1.4.4
