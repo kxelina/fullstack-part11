@@ -24,9 +24,9 @@ mongoose
     })
 
 app.use(cors({
-    origin: 'https://bloglist-frontend-9gzx.onrender.com/',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    origin: 'https://bloglist-frontend-9gzx.onrender.com',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 app.use(express.static('dist'))
 app.use(express.json())
