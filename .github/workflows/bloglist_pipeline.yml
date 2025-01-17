@@ -26,9 +26,9 @@ jobs:
         uses: supercharge/mongodb-github-action@1.12.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
-          mongodb-username: testuser
-          mongodb-password: testpassword
-          mongodb-db: testdb
+          mongodb-username: ${{ secrets.MONGODB_USERNAME }}
+          mongodb-password: ${{ secrets.MONGODB_PASSWORD }}
+          mongodb-db: ${{ secrets.MONGODB_DB }}
       - name: Install frontend dependencies 
         run: cd bloglist-frontend && npm install
       - name: Install backend dependencies
