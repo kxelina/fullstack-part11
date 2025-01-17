@@ -13,11 +13,22 @@ jobs:
     permissions:
         deployments: write
         contents: write
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+        mongodb-version: ['6.0', '7.0', '8.0']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ matrix.node-version }}
+      - name: mongodb 
+        uses: supercharge/mongodb-github-action@v1.12.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-username: testuser
+          mongodb-password: testpw
+          mongodb-db: testdb
       - name: Install frontend dependencies 
         run: cd bloglist-frontend && npm install
       - name: Install backend dependencies
@@ -28,6 +39,9 @@ jobs:
         run: cd bloglist-frontend && npm run build
       - name: test backend
         run: cd bloglist-backend && npm run test
+        env:
+          CI: true
+          MONGODB_URI: mongodb://testuser:testpw@localhost:27017/testdb
       - name: test frontend
         run: cd bloglist-frontend && npm run test
       - name: Render deployment
